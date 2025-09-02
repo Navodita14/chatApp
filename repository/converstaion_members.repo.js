@@ -5,11 +5,7 @@ const createConversationUserTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS conversation_members(
         conversation_id serial references conversations(conversation_id) on delete cascade,
-        sender_id int not null references users(user_id) on delete cascade,
-        created_at timestamp default current_timestamp,
-        created_by int,
-        updated_at timestamp default current_timestamp,
-        update_by int
+        user_id int not null references users(user_id) on delete cascade
         )`;
     await pool.query(query);
   } catch (error) {
@@ -17,4 +13,14 @@ const createConversationUserTable = async () => {
   }
 };
 
-module.exports = { createConversationUserTable };
+const addConversationUser= async(conversation_id, members)=>{
+  const values= members.map((_, idx)=>`($1, $${idx+2})`).join(",")
+  const params=[conversation_id, ...members]
+  console.log(params);
+  
+  const query= `INSERT INTO conversation_members (conversation_id, user_id) VALUES ${values}`;
+  const result= await pool.query(query, params)
+  return "Conversation started"
+}
+
+module.exports = { createConversationUserTable , addConversationUser};

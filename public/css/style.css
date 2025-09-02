@@ -1,0 +1,51 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f0f0f0;
+}
+.box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+input,
+button {
+  width: 75%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: auto;
+}
+button {
+  border: none;
+  width: fit-content;
+  cursor: pointer;
+}
+#loginForm {
+  display: flex;
+  flex-direction: column;
+}
+.loginbtn {
+  margin: auto;
+}
+.loginHeader {
+  text-align: center;
+}
+button.register {
+  background: #007bff;
+  color: white;
+}
+button.register:hover {
+  background: #0056b3;
+}
+button.loginbtn {
+  background: #28a745;
+  color: white;
+}
+button.loginbtn:hover {
+  background: #1e7e34;
+}

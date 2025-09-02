@@ -16,4 +16,10 @@ const createConversationTable= async ()=>{
     }
 }
 
-module.exports= {createConversationTable}
+const createConverstaion= async(id)=>{
+    const query= `insert into conversations(created_by, update_by) values ($1, $1) returning conversation_id`;
+    const result= await pool.query(query, [id])
+    return result.rows[0].conversation_id;
+}
+
+module.exports= {createConversationTable, createConverstaion}
