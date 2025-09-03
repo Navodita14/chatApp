@@ -6,7 +6,7 @@ const authenticate = (req, res, next) => {
   //fetcing header for token verification
   const authHeader = req.headers["authorization"];
   if (!authHeader) {
-    res
+    return res
       .status(StatusCodes.NETWORK_AUTHENTICATION_REQUIRED)
       .send("No token provided");
   }
@@ -15,7 +15,7 @@ const authenticate = (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(payload);
+    // console.log(payload);
 
     req.user = { id: payload.id};
 

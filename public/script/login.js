@@ -9,8 +9,11 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       body: JSON.stringify({ email, password })
     });
     const data = await res.json();
+    // console.log(res.ok,  " aaaaaaaaaaaaaaa", data);
+    
     if (res.ok) {
-      localStorage.setItem("token", data.token); // save token
+      
+      localStorage.setItem("token", data); // save token
       alert("Login successful!");
       window.location.href = "dashboard.html"; // go to dashboard
     } else {

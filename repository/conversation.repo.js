@@ -22,4 +22,25 @@ const createConverstaion= async(id)=>{
     return result.rows[0].conversation_id;
 }
 
-module.exports= {createConversationTable, createConverstaion}
+const getConvByUserId= async(userId)=>{
+    const query= `select c. * from conversations c left join conversation_members cm on c.conversation_id = cm.conversation_id where cm.user_id= $1 order by c.updated_at desc`
+
+    const result= await pool.query(query, [userId])
+    // console.log("@@@@@@@@@",result);
+    
+    return result.rows;
+
+}
+
+const getConvById= async(convoId)=>{
+    const query= `Select * from conversations where conversation_id = $1`
+    const result= await pool.query(query, [convoId])
+
+    return result.rows
+}
+
+// const deleteConvo = async (id)=>{
+
+// }
+
+module.exports= {createConversationTable, createConverstaion, getConvById, getConvByUserId}

@@ -5,7 +5,7 @@ const service= require('../services/auth.service');
 const login = async (req, res) => {
   const {email,password}= req.body
   const result = await service.loginUser(email, password)
-  console.log(result);
+  // console.log(result);
   
   res.status(StatusCodes.OK).json(result)
 };

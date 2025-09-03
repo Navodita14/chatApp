@@ -16,7 +16,7 @@ const createConversationUserTable = async () => {
 const addConversationUser= async(conversation_id, members)=>{
   const values= members.map((_, idx)=>`($1, $${idx+2})`).join(",")
   const params=[conversation_id, ...members]
-  console.log(params);
+  // console.log(params);
   
   const query= `INSERT INTO conversation_members (conversation_id, user_id) VALUES ${values}`;
   const result= await pool.query(query, params)

@@ -11,6 +11,7 @@ const createDB = require("./db/createDB")
 const createTables = require("./db/pgDbInIt")
 const convoRoute= require("./route/conversations.route")
 const auth=require('./middleware/auth.middleware')
+const msg= require('./route/messages.route')
 
 async function initializeDatabase() {
   try {
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve("./public")));
 app.use("/auth", authRoute);
 app.use("/conversations",auth.authenticate, convoRoute)
+app.use("/message", auth.authenticate, msg)
 
 
 app.get("/", (req, res) => {

@@ -18,23 +18,23 @@ const registerUser = async (name, email, password) => {
 
 const loginUser = async (email, password) => {
   const user = await repo.getUserByEmail(email);
-  console.log(user);
+  // console.log(user);
 
   if (!user) {
     throw new Error("User does not exists");
   }
   const ok = await bcrypt.compare(password, user.password);
-  console.log(ok);
+  // console.log(ok);
   
   if (!ok) {
-    throw new Error("Pasword does not match");
+    throw new Error("Password does not match");
   }
   const token = jwt.sign(
     { id: user.user_id, fullname: user.fullname, email: user.email},
     process.env.JWT_SECRET,
     { expiresIn: "30d" }
   );
-  console.log(token);
+  // console.log(token);
   
   return token;
 };

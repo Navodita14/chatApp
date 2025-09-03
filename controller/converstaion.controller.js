@@ -1,18 +1,34 @@
 const { StatusCodes } = require("http-status-codes");
 const convoService= require('../services/conversation.service')
 
-const conversation=async (req , res)=>{
-    const dataMember= req.body
+const createConversation=async (req , res)=>{
+    const {dataMembers}= req.body
     const user= req.user;
-    console.log('*',user,'*', senderId, recieversId);
+    // console.log(dataMembers);
     
-    const members=[...dataMember]
+    const members=[...dataMembers]
+    // console.log(members, user.id);
+    
     const data=await convoService.createNewConversation(members, user.id)
     // console.log(data);
     
     res.status(StatusCodes.OK).json({msg: data})
 }
 
+const getUserConversations = async (req, res) => {
+  const userId= req.user.id;
+  const conversations = await convoService.getUserConversationsService(userId);
+  res.status(StatusCodes.OK).json({ success: true, data: conversations });
+};
+// READ one
+const getConversationById = async (req, res) => {
+  const { id } = req.params;
+  const conversation = await convoService.getConversationByIdService(id);
+  if (!conversation) {
+    return res.status(StatusCodes.NOT_FOUND).json({ success: false, msg: "Conversation not found" });
+  }
+  res.status(StatusCodes.OK).json({ success: true, data: conversation });
+};
 
 
-module.exports={conversation}
+module.exports={createConversation, getConversationById, getUserConversations}
