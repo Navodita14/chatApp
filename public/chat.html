@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Chat - SocketChat</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <button onclick="window.location.href='convo.html'">
+        :arrow_left: Back
+      </button>
+      <h1 id="chatTitle">Chat</h1>
+    </header>
+    <main class="chat">
+      <ul id="messages"></ul>
+      <form id="sendForm">
+        <input id="messageInput" placeholder="Type message..." />
+        <button type="submit">Send</button>
+      </form>
+    </main>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="script/chat.js"></script>
+  </body>
+</html>

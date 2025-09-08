@@ -6,16 +6,19 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const res = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
-    // console.log(res.ok,  " aaaaaaaaaaaaaaa", data);
-    
+    res.ok, " aaaaaaaaaaaaaaa", data;
+
     if (res.ok) {
-      
-      localStorage.setItem("token", data); // save token
+      data.token;
+      data.userId;
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.userId); // save token
       alert("Login successful!");
-      window.location.href = "dashboard.html"; // go to dashboard
+      window.location.href = "convo.html"; // go to dashboard
     } else {
       alert(data.message || "Invalid credentials");
     }

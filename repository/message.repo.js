@@ -22,13 +22,23 @@ const createMessageTable = async () => {
 };
 
 // CREATE
-async function createMessage({ message_content, conversation_id, sender_id, isRead = false }) {
+async function createMessage({
+  message_content,
+  conversation_id,
+  sender_id,
+  isRead = false,
+}) {
   const query = `
     INSERT INTO messages (message_content, conversation_id, sender_id, is_read, created_at, created_by, update_by)
     VALUES ($1, $2, $3, $4, NOW(), $3, $3)
     RETURNING *;
   `;
-  const result = await pool.query(query, [message_content, conversation_id, sender_id, isRead]);
+  const result = await pool.query(query, [
+    message_content,
+    conversation_id,
+    sender_id,
+    isRead,
+  ]);
   return result.rows[0];
 }
 // READ all messages in a conversation
@@ -72,7 +82,10 @@ async function deleteMessage(message_id) {
   const result = await pool.query(query, [message_id]);
   return result.rows[0];
 }
-module.exports = { createMessageTable, createMessage,
+module.exports = {
+  createMessageTable,
+  createMessage,
   getMessagesByConversationId,
   updateMessage,
-  deleteMessage };
+  deleteMessage,
+};

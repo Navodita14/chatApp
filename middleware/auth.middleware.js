@@ -11,18 +11,17 @@ const authenticate = (req, res, next) => {
       .send("No token provided");
   }
   const token = authHeader;
-  // console.log(token);
+  // (token);
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    // console.log(payload);
+    // (payload);
 
-    req.user = { id: payload.id};
+    req.user = { id: payload.id };
 
     next();
   } catch (error) {
     res.status(StatusCodes.UNAUTHORIZED).send("Not authenticated");
-    console.log(error);
   }
 };
 

@@ -1,14 +1,20 @@
 const repo = require("../repository/message.repo");
 
-async function createMessageService(data) {
-  return await repo.createMessage(data);
+async function createMessageService({
+  conversation_id,
+  sender_id,
+  message_content,
+}) {
+  return await repo.createMessage({
+    conversation_id,
+    sender_id,
+    message_content,
+  });
 }
 async function getMessagesByConversationIdService(conversation_id) {
   return await repo.getMessagesByConversationId(conversation_id);
 }
-// async function getMessageByIdService(message_id) {
-//   return await repo.getMessageById(message_id);
-// }
+
 async function updateMessageService(message_id) {
   return await repo.updateMessage(message_id);
 }

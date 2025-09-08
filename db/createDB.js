@@ -14,18 +14,10 @@ const createDatabase = async () => {
   });
   await client.connect();
 
-  // console.log("+++++++++++++++++++++++++");
-
-  //  console.log(`Intended database name: "${dbName}"`);
-  // console.log("+++++++++++++++++++++++++");
-
   const res = await client.query(
     `SELECT 1 FROM pg_database WHERE datname = $1`,
     [dbName]
   );
-
-  // console.log(res);
-// 
 
   if (res.rowCount === 0) {
     await client.query(`CREATE DATABASE "${dbName}"`);

@@ -5,13 +5,14 @@ const http = require("http");
 const path = require("path");
 const { Server } = require("socket.io");
 const server = http.createServer(app);
-const io = new Server(server);
 const authRoute = require("./route/auth.route");
-const createDB = require("./db/createDB")
-const createTables = require("./db/pgDbInIt")
-const convoRoute= require("./route/conversations.route")
-const auth=require('./middleware/auth.middleware')
-const msg= require('./route/messages.route')
+const createDB = require("./db/createDB");
+const createTables = require("./db/pgDbInIt");
+const convoRoute = require("./route/conversations.route");
+const auth = require("./middleware/auth.middleware");
+const msg = require("./route/messages.route");
+const initSocket = require("./socket");
+const userRoute = require("./route/user.route");
 
 async function initializeDatabase() {
   try {
@@ -24,21 +25,15 @@ async function initializeDatabase() {
 }
 initializeDatabase();
 
-
-io.on("connection", (socket) => {
-  socket.on("user-message", (message) => {
-    console.log("A new message", message);
-    io.emit("message", message);
-  });
-});
+initSocket.initsocket(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve("./public")));
 app.use("/auth", authRoute);
-app.use("/conversations",auth.authenticate, convoRoute)
-app.use("/message", auth.authenticate, msg)
-
+app.use("/conversations", auth.authenticate, convoRoute);
+app.use("/message", auth.authenticate, msg);
+app.use("/users", userRoute);
 
 app.get("/", (req, res) => {
   return res.sendFile(path.resolve("./public/register.html"));
